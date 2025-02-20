@@ -9,6 +9,7 @@ interface ISupportRequest extends Document {
   createdAt: Date;
   isAllocated: boolean;
   allocatedEmployee: mongoose.Types.ObjectId | null; // References a User (employee)
+  status: "Open" | "In Progress" | "On Hold" | "Completed";
 }
 
 const supportRequestSchema = new Schema<ISupportRequest>({
@@ -67,6 +68,11 @@ const supportRequestSchema = new Schema<ISupportRequest>({
     type: Schema.Types.ObjectId,
     ref: "users", // Refers to the assigned employee (who is also a User)
     default: null,
+  },
+  status: {
+    type: String, // ✅ Added type
+    enum: ["Open", "In Progress", "On Hold", "Completed"],
+    default: "Open",
   },
 });
 

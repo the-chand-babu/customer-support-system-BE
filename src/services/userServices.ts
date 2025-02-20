@@ -8,6 +8,7 @@ const userSchema = Joi.object({
   userName: Joi.string().min(3).max(30).required(),
   password: Joi.string().min(6).max(50).required(),
   userType: Joi.string().valid("Customer", "Employee").required(),
+  isAdmin: Joi.boolean(),
 });
 
 export class UserServices {
@@ -60,7 +61,15 @@ export class UserServices {
       return { status: 500, success: false, message: "Internal Server Error" };
     }
   }
-  async getUsers() {}
+  async getUsers() {
+    try {
+      const users = await userModal.find();
+      return { status: 200, success: true, data: users };
+    } catch (error) {
+      logger.error("Error in getUsers:", { error });
+      return { status: 500, success: false, message: "Internal Server Error" };
+    }
+  }
   async getUserByUserName(userName: string) {
     try {
       const user = await userModal.findOne({ userName });

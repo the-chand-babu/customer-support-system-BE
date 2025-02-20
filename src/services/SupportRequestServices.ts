@@ -47,7 +47,9 @@ export class SupportRequestService {
    */
   async getSupportRequestById(id: string) {
     try {
-      const supportTicket = await SupportRequest.findById(id);
+      const supportTicket = await SupportRequest.find({
+        allocatedEmployee: id,
+      });
       if (!supportTicket) {
         return {
           status: 404,
@@ -184,6 +186,27 @@ export class SupportRequestService {
       };
     } catch (error) {
       logger.error(`Error while assigning employee: ${error}`);
+      return {
+        status: 500,
+        success: false,
+        message: "Internal server error",
+      };
+    }
+  }
+
+  //get all unallocated task...
+
+  async getAllAllocatedOrUnallocatedTask(isAllocated: boolean) {
+    try {
+      const data = await SupportRequest.find({ isAllocated: isAllocated });
+      return {
+        status: 200,
+        success: true,
+        messages: "All the list of task",
+        data: data,
+      };
+    } catch (error) {
+      logger.info("Error while getting unAllocated Task");
       return {
         status: 500,
         success: false,

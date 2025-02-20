@@ -6,13 +6,12 @@ import {
   deleteUser,
   updateUser,
 } from "../../controllers/UserController"; // Ensure alias is correctly configured in tsconfig.json
+import { isAuthenticate } from "../../middlewares/auth";
 
-const userRoutes = Router();
+export const userRoutes = Router();
 
-userRoutes.get("/", getUsers);
+userRoutes.get("/", isAuthenticate, getUsers);
 userRoutes.get("/profile/:id", getUserProfile);
 userRoutes.patch("/:id", updateUser); // Fixed
 userRoutes.delete("/:id", deleteUser); // Fixed
 userRoutes.post("/", createUser);
-
-export default userRoutes;

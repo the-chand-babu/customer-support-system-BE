@@ -7,6 +7,7 @@ declare global {
     interface Request {
       userId?: string;
       userType?: string;
+      isAdmin?: boolean;
     }
   }
 }
@@ -41,8 +42,7 @@ export const isAuthenticate = (
     // ✅ Assign values to req.body
     req.userId = decoded.userId;
     req.userType = decoded.userType;
-
-    console.log("Updated req.body:", req.body);
+    if (decoded.isAdmin) req.isAdmin = decoded.isAdmin;
     return next(); // ✅ Ensure next() is always called when authentication succeeds
   } catch (error) {
     console.error("JWT Verification Error:", error);

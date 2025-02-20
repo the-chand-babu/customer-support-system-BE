@@ -17,6 +17,7 @@ export const supportSchema = Joi.object({
   policyUpload: Joi.string()
     .required()
     .messages({ "any.required": "Required" }),
+  status: Joi.string(),
 });
 
 export interface ISupportRequest {
@@ -25,4 +26,7 @@ export interface ISupportRequest {
   issueTypes: string[];
   issueDescription: string;
   policyUpload: string;
+  isAllocated?: boolean;
+  allocatedEmployee?: string;
+  status?: string;
 }

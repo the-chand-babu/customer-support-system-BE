@@ -49,10 +49,15 @@ export const LoginController = async (req: Request, res: Response) => {
         message: "Please provide a valid password!",
       });
     }
-
     // Create JWT token
     const token = jwt.sign(
-      { userId: data._id, userType: data.userType },
+      {
+        userId: data._id,
+        userType: data.userType,
+        ...(data.userType === "Employee" && data.isAdmin
+          ? { isAdmin: data.isAdmin }
+          : {}), // ✅ Correct spread syntax
+      },
       process.env.JWT_SECRET!,
       {
         expiresIn: "6d",
