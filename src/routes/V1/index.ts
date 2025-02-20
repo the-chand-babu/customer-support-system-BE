@@ -2,6 +2,7 @@ import { Express } from "express";
 import session from "express-session";
 
 import { AuthRoutes } from "./auth";
+import { SupportTicketRoutes } from "./supportRequest";
 
 export const v1Apis = function (app: Express) {
   app.use(
@@ -12,4 +13,5 @@ export const v1Apis = function (app: Express) {
     })
   );
   app.use("/api/v1/auth", AuthRoutes);
+  app.use("/api/v1/supportRequest", SupportTicketRoutes);
 };

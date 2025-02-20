@@ -1,22 +1,20 @@
 import mongoose, { Document, Schema } from "mongoose";
 
 interface ISupportRequest extends Document {
-  userId: mongoose.Schema.Types.ObjectId;
+  userId: mongoose.Types.ObjectId;
   productType: "Mobile Phone" | "TV" | "Refrigerator" | "Washing Machine";
   issueTypes: string[];
   issueDescription?: string;
-  policyUpload: {
-    fileName: string;
-    fileType: "pdf" | "doc" | "docx" | "jpg" | "png";
-    fileSize: number;
-  };
+  policyUpload?: string;
   createdAt: Date;
+  isAllocated: boolean;
+  allocatedEmployee: mongoose.Types.ObjectId | null; // References a User (employee)
 }
 
 const supportRequestSchema = new Schema<ISupportRequest>({
   userId: {
     type: Schema.Types.ObjectId,
-    ref: "User",
+    ref: "users", // Refers to the user who created the ticket
     required: true,
   },
   productType: {
@@ -55,24 +53,20 @@ const supportRequestSchema = new Schema<ISupportRequest>({
     maxlength: 1000,
   },
   policyUpload: {
-    fileName: {
-      type: String,
-      required: true,
-    },
-    fileType: {
-      type: String,
-      enum: ["pdf", "doc", "docx", "jpg", "png"],
-      required: true,
-    },
-    fileSize: {
-      type: Number,
-      max: 2 * 1024 * 1024, // 2MB limit
-      required: true,
-    },
+    type: String,
   },
   createdAt: {
     type: Date,
     default: Date.now,
+  },
+  isAllocated: {
+    type: Boolean,
+    default: false,
+  },
+  allocatedEmployee: {
+    type: Schema.Types.ObjectId,
+    ref: "users", // Refers to the assigned employee (who is also a User)
+    default: null,
   },
 });
 
