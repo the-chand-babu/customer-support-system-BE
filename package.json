@@ -3,9 +3,12 @@
   "version": "1.0.0",
   "description": "",
   "main": "app.ts",
-  "scripts": {
-    "start": "nodemon src/app.ts"
-  },
+"scripts": {
+  "dev": "nodemon src/app.ts",
+  "build": "tsc",
+  "start": "node dist/app.js"
+},
+
   "keywords": [],
   "author": "",
   "license": "ISC",
