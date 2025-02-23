@@ -23,7 +23,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ChangeStatus = exports.getMyTask = exports.assignTask = exports.GetAllAllocatedTask = exports.GetAllUnAllocatedTask = exports.CreateSupportRequest = void 0;
+exports.getMyTickets = exports.ChangeStatus = exports.getMyTask = exports.assignTask = exports.GetAllAllocatedTask = exports.GetAllUnAllocatedTask = exports.CreateSupportRequest = void 0;
 const logger_1 = __importDefault(require("../utils/logger"));
 const services_1 = require("../services");
 const supportRequestService = new services_1.SupportRequestService();
@@ -118,3 +118,17 @@ const ChangeStatus = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     }
 });
 exports.ChangeStatus = ChangeStatus;
+const getMyTickets = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a;
+    try {
+        const _b = yield supportRequestService.getMyTickets((_a = req.userId) !== null && _a !== void 0 ? _a : ""), { data, status } = _b, rest = __rest(_b, ["data", "status"]);
+        return res.status(status).json(Object.assign({ data: data }, rest));
+    }
+    catch (error) {
+        logger_1.default.info(`Error : ${error}`);
+        return res
+            .status(500)
+            .json({ success: false, messages: "Internal Server Error" });
+    }
+});
+exports.getMyTickets = getMyTickets;

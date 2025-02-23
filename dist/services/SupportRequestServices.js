@@ -254,6 +254,23 @@ class SupportRequestService {
             }
         });
     }
+    getMyTickets(userId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const tickets = yield SupportRequest_1.default.find({ userId: userId });
+                return {
+                    status: 200,
+                    success: true,
+                    messages: "All the list of task",
+                    data: tickets,
+                };
+            }
+            catch (error) {
+                logger_1.default.info("Error while getting unAllocated Task");
+                return { status: 500, success: false, message: "Internal server error" };
+            }
+        });
+    }
 }
 exports.SupportRequestService = SupportRequestService;
 exports.default = new SupportRequestService();

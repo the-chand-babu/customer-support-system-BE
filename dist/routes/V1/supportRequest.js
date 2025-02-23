@@ -16,3 +16,4 @@ exports.SupportTicketRoutes.get("/allocatedTask", auth_1.isAuthenticate, (0, aut
 exports.SupportTicketRoutes.patch("/assignedTask/:ticketId", auth_1.isAuthenticate, (0, authorization_1.default)(["Employee", "Admin"]), SupportRequest_1.assignTask);
 exports.SupportTicketRoutes.get("/assignedToMe", auth_1.isAuthenticate, (0, authorization_1.default)(["Employee"]), SupportRequest_1.getMyTask);
 exports.SupportTicketRoutes.patch("/changeStatus/:ticketId", auth_1.isAuthenticate, (0, authorization_1.default)(["Employee"]), SupportRequest_1.ChangeStatus);
+exports.SupportTicketRoutes.get("/my-task", auth_1.isAuthenticate, SupportRequest_1.getMyTickets);
