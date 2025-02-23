@@ -78,6 +78,7 @@ const LoginController = (req, res) => __awaiter(void 0, void 0, void 0, function
             success: true,
             message: "Successfully logged in",
             token,
+            role: data.userType,
         });
     }
     catch (error) {
