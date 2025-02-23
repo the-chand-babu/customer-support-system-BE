@@ -1,9 +1,8 @@
 const express = require("express");
-import dotEnv from "dotenv";
-import cors from "cors";
-import { ConnectDB } from "./config/db";
+require("dotenv").config();
+const cors = require("cors");
+import { ConnnectDB } from "./config/db";
 import { routes } from "./routes";
-dotEnv.config();
 
 const app = express();
 
@@ -15,7 +14,7 @@ app.use(express.urlencoded({ extended: true }));
 
 routes(app);
 
-app.listen(process.env.PORT, async () => {
-  await ConnectDB();
+app.listen(process.env.PORT, () => {
+  ConnnectDB();
   console.log("server is listning:", process.env.PORT);
 });
