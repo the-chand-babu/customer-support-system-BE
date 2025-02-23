@@ -95,6 +95,16 @@ export class UserServices {
     }
   }
 
+  async getAllEmployees() {
+    try {
+      const employees = await userModal.find({ userType: "Employee" });
+      return { status: 200, success: true, data: employees };
+    } catch (error) {
+      logger.error("Error in getAllEmployees:", { error });
+      return { status: 500, success: false, message: "Internal Server Error" };
+    }
+  }
+
   async updateUser() {}
   async deleteUser() {}
 }

@@ -31,3 +31,15 @@ export const updateUser = (req: Request, res: Response) => {
 export const createUser = (req: Request, res: Response) => {
   res.send("Creating user");
 };
+
+export const getAllEmployees = async (
+  req: Request,
+  res: Response
+): Promise<any> => {
+  try {
+    const { data, status, ...rest } = await userServices.getAllEmployees();
+    return res.status(status).json({ data: data, ...rest });
+  } catch (error) {
+    console.log("error", error);
+  }
+};

@@ -111,6 +111,18 @@ class UserServices {
             }
         });
     }
+    getAllEmployees() {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const employees = yield models_1.userModal.find({ userType: "Employee" });
+                return { status: 200, success: true, data: employees };
+            }
+            catch (error) {
+                logger_1.default.error("Error in getAllEmployees:", { error });
+                return { status: 500, success: false, message: "Internal Server Error" };
+            }
+        });
+    }
     updateUser() {
         return __awaiter(this, void 0, void 0, function* () { });
     }

@@ -23,7 +23,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createUser = exports.updateUser = exports.deleteUser = exports.getUserProfile = exports.getUsers = void 0;
+exports.getAllEmployees = exports.createUser = exports.updateUser = exports.deleteUser = exports.getUserProfile = exports.getUsers = void 0;
 const services_1 = require("../services");
 const logger_1 = __importDefault(require("../utils/logger"));
 const userServices = new services_1.UserServices();
@@ -56,3 +56,13 @@ const createUser = (req, res) => {
     res.send("Creating user");
 };
 exports.createUser = createUser;
+const getAllEmployees = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const _a = yield userServices.getAllEmployees(), { data, status } = _a, rest = __rest(_a, ["data", "status"]);
+        return res.status(status).json(Object.assign({ data: data }, rest));
+    }
+    catch (error) {
+        console.log("error", error);
+    }
+});
+exports.getAllEmployees = getAllEmployees;
