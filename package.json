@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node dist/app.js",
     "start:dev": "ts-node-dev --respawn --transpile-only src/app.ts",
-    "build": "tsc"
+    "build": "tsc",
+    "stage" : "tsc && git status && git add ."
   },
   "keywords": [],
   "author": "",
