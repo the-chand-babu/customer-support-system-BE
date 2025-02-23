@@ -96,6 +96,21 @@ class UserServices {
             }
         });
     }
+    getUserById(id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const user = yield models_1.userModal.findById(id);
+                if (!user) {
+                    return { status: 404, success: false, message: "User not found" };
+                }
+                return { status: 200, success: true, data: user };
+            }
+            catch (error) {
+                logger_1.default.error("Error in getUserById:", { error });
+                return { status: 500, success: false, message: "Internal Server Error" };
+            }
+        });
+    }
     updateUser() {
         return __awaiter(this, void 0, void 0, function* () { });
     }

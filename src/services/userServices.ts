@@ -82,6 +82,18 @@ export class UserServices {
       return { status: 500, success: false, message: "Internal Server Error" };
     }
   }
+  async getUserById(id: string) {
+    try {
+      const user = await userModal.findById(id);
+      if (!user) {
+        return { status: 404, success: false, message: "User not found" };
+      }
+      return { status: 200, success: true, data: user };
+    } catch (error) {
+      logger.error("Error in getUserById:", { error });
+      return { status: 500, success: false, message: "Internal Server Error" };
+    }
+  }
 
   async updateUser() {}
   async deleteUser() {}

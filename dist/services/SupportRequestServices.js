@@ -24,7 +24,6 @@ class SupportRequestService {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const { error } = supportTicketType_1.supportSchema.validate(payload, { abortEarly: false });
-                console.log("this is error", payload.issueTypes);
                 if (error) {
                     const errorMessages = error.details
                         .map((err) => err.message)
@@ -210,12 +209,39 @@ class SupportRequestService {
     getAllAllocatedOrUnallocatedTask(isAllocated) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const data = yield SupportRequest_1.default.find({ isAllocated: isAllocated });
+                const tickets = yield SupportRequest_1.default.aggregate([
+                    { $match: { isAllocated: isAllocated } },
+                    {
+                        $lookup: {
+                            from: "users",
+                            localField: "userId",
+                            foreignField: "_id",
+                            as: "user",
+                        },
+                    },
+                    {
+                        $lookup: {
+                            from: "users",
+                            localField: "allocatedEmployee",
+                            foreignField: "_id",
+                            as: "allocatedEmployee",
+                        },
+                    },
+                    {
+                        $unwind: "$user",
+                    },
+                    {
+                        $unwind: {
+                            path: "$allocatedEmployee",
+                            preserveNullAndEmptyArrays: true,
+                        },
+                    },
+                ]);
                 return {
                     status: 200,
                     success: true,
                     messages: "All the list of task",
-                    data: data,
+                    data: tickets,
                 };
             }
             catch (error) {

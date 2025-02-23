@@ -11,7 +11,7 @@ export class SupportRequestService {
   async createSupportRequest(payload: ISupportRequest) {
     try {
       const { error } = supportSchema.validate(payload, { abortEarly: false });
-      console.log("this is error", payload.issueTypes);
+
       if (error) {
         const errorMessages = error.details
           .map((err) => err.message)
@@ -198,12 +198,40 @@ export class SupportRequestService {
 
   async getAllAllocatedOrUnallocatedTask(isAllocated: boolean) {
     try {
-      const data = await SupportRequest.find({ isAllocated: isAllocated });
+      const tickets = await SupportRequest.aggregate([
+        { $match: { isAllocated: isAllocated } },
+        {
+          $lookup: {
+            from: "users",
+            localField: "userId",
+            foreignField: "_id",
+            as: "user",
+          },
+        },
+
+        {
+          $lookup: {
+            from: "users",
+            localField: "allocatedEmployee",
+            foreignField: "_id",
+            as: "allocatedEmployee",
+          },
+        },
+        {
+          $unwind: "$user",
+        },
+        {
+          $unwind: {
+            path: "$allocatedEmployee",
+            preserveNullAndEmptyArrays: true,
+          },
+        },
+      ]);
       return {
         status: 200,
         success: true,
         messages: "All the list of task",
-        data: data,
+        data: tickets,
       };
     } catch (error) {
       logger.info("Error while getting unAllocated Task");
