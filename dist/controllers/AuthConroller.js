@@ -74,6 +74,7 @@ const LoginController = (req, res) => __awaiter(void 0, void 0, void 0, function
             : {})), process.env.JWT_SECRET, {
             expiresIn: "6d",
         });
+        console.log(token);
         return res.status(200).json({
             success: true,
             message: "Successfully logged in",
