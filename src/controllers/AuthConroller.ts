@@ -68,6 +68,7 @@ export const LoginController = async (req: Request, res: Response) => {
       success: true,
       message: "Successfully logged in",
       token,
+      role: data.userType,
     });
   } catch (error) {
     logger.error(`Login error: ${error}`);
