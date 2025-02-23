@@ -242,6 +242,20 @@ export class SupportRequestService {
       };
     }
   }
+  async getMyTickets(userId: string) {
+    try {
+      const tickets = await SupportRequest.find({ userId: userId });
+      return {
+        status: 200,
+        success: true,
+        messages: "All the list of task",
+        data: tickets,
+      };
+    } catch (error) {
+      logger.info("Error while getting unAllocated Task");
+      return { status: 500, success: false, message: "Internal server error" };
+    }
+  }
 }
 
 export default new SupportRequestService();

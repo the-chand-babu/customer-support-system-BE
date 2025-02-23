@@ -6,6 +6,7 @@ import {
   assignTask,
   getMyTask,
   ChangeStatus,
+  getMyTickets,
 } from "../../controllers/SupportRequest";
 import { upload } from "../../middlewares/multer";
 import { isAuthenticate } from "../../middlewares/auth";
@@ -54,3 +55,5 @@ SupportTicketRoutes.patch(
   isAuthorization(["Employee"]),
   ChangeStatus
 );
+
+SupportTicketRoutes.get("/my-task", isAuthenticate, getMyTickets);

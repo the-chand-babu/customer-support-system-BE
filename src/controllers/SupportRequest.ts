@@ -110,6 +110,20 @@ const ChangeStatus = async (req: Request, res: Response): Promise<any> => {
   }
 };
 
+const getMyTickets = async (req: Request, res: Response): Promise<any> => {
+  try {
+    const { data, status, ...rest } = await supportRequestService.getMyTickets(
+      req.userId ?? ""
+    );
+    return res.status(status).json({ data: data, ...rest });
+  } catch (error) {
+    logger.info(`Error : ${error}`);
+    return res
+      .status(500)
+      .json({ success: false, messages: "Internal Server Error" });
+  }
+};
+
 export {
   CreateSupportRequest,
   GetAllUnAllocatedTask,
@@ -117,4 +131,5 @@ export {
   assignTask,
   getMyTask,
   ChangeStatus,
+  getMyTickets,
 };
