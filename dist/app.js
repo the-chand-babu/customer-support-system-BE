@@ -13,6 +13,6 @@ app.options("*", cors());
 app.use(express.urlencoded({ extended: true }));
 (0, routes_1.routes)(app);
 app.listen(process.env.PORT, () => {
-  (0, db_1.ConnnectDB)();
-  console.log("server is listning:", process.env.PORT);
+    (0, db_1.ConnnectDB)();
+    console.log("server is listning:", process.env.PORT);
 });
