@@ -68,6 +68,10 @@ export const LoginController = async (req: Request, res: Response) => {
       success: true,
       message: "Successfully logged in",
       token,
+      userType: data.userType,
+      ...(data.userType === "Employee" && data.isAdmin
+        ? { isAdmin: data.isAdmin }
+        : {}),
     });
   } catch (error) {
     logger.error(`Login error: ${error}`);

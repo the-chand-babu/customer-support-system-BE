@@ -75,11 +75,9 @@ const LoginController = (req, res) => __awaiter(void 0, void 0, void 0, function
             expiresIn: "6d",
         });
         console.log(token);
-        return res.status(200).json({
-            success: true,
-            message: "Successfully logged in",
-            token,
-        });
+        return res.status(200).json(Object.assign({ success: true, message: "Successfully logged in", token, userType: data.userType }, (data.userType === "Employee" && data.isAdmin
+            ? { isAdmin: data.isAdmin }
+            : {})));
     }
     catch (error) {
         logger_1.default.error(`Login error: ${error}`);
