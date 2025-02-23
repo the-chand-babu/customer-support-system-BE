@@ -63,7 +63,7 @@ export const LoginController = async (req: Request, res: Response) => {
         expiresIn: "6d",
       }
     );
-
+    console.log(token);
     return res.status(200).json({
       success: true,
       message: "Successfully logged in",
